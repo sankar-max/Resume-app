@@ -5,7 +5,6 @@ export const env = createEnv({
   server: {
     ARCJET_KEY: z.string().min(1),
     CLERK_SECRET_KEY: z.string().min(1),
-    DATABASE_URL: z.string().min(1),
     DB_PASSWORD: z.string().min(1),
     DB_USER: z.string().min(1),
     DB_HOST: z.string().min(1),
@@ -17,7 +16,7 @@ export const env = createEnv({
       const { DB_USER, DB_HOST, DB_PORT, DB_NAME, DB_PASSWORD, ...rest } = val
       return {
         ...rest,
-        DATABASE_URL: `postgres://${DB_USER}@${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`,
+        DATABASE_URL: `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`,
       }
     })
   },

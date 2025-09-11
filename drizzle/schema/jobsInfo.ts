@@ -2,6 +2,8 @@ import { pgEnum, pgTable, varchar } from "drizzle-orm/pg-core"
 import { createdAt, id, updateAt } from "./helpers"
 import { UserTable } from "./user"
 import { relations } from "drizzle-orm"
+import { QuestionTable } from "./question"
+import { InterviewTable } from "./interview"
 
 export const experienceLevel = ["junior", "mid-level", "senior"] as const
 
@@ -23,9 +25,11 @@ export const JobInfoTable = pgTable("job_info", {
   updateAt,
 })
 
-export const jobInfoRelations = relations(JobInfoTable, ({ one }) => ({
+export const jobInfoRelations = relations(JobInfoTable, ({ one, many }) => ({
   user: one(UserTable, {
     fields: [JobInfoTable.userId],
     references: [UserTable.id],
   }),
+  questions: many(QuestionTable),
+  interviews: many(InterviewTable),
 }))
